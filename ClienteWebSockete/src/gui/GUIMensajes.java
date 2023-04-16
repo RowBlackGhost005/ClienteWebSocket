@@ -1,6 +1,9 @@
 package gui;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import domain.Cancion;
 import domain.Message;
 import java.io.BufferedReader;
@@ -80,15 +83,14 @@ public class GUIMensajes extends javax.swing.JFrame {
     
     public String checkTypeMessage(String stringToCheck){
         
-        Gson gson = new Gson();
-        
+        if(stringToCheck.charAt(0) != '{'){
+            return "msg";
+        }
         
         try{
-            
-            gson.toJson(stringToCheck , Object.class);
-            
+            JsonParser.parseString(stringToCheck);
             return "jsn";
-        }catch(Exception e){
+        }catch(JsonSyntaxException e){
             return "msg";
         }
         

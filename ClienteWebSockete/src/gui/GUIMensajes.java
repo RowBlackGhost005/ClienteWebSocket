@@ -1,7 +1,9 @@
 package gui;
 
+import com.google.gson.Gson;
 import domain.Cancion;
 import domain.Message;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -66,12 +68,30 @@ public class GUIMensajes extends javax.swing.JFrame {
         
         String from = userOnline;
         String to = getTargetUser();
-        String command = "add:msg";
         String message = tareaMessage.getText();
+        String command = checkTypeMessage(message);
+        
+        addMessage("YO: " + message);
         
         Message messageToSend = new Message(from, to, command, message);
         
         chat.sendMessageAll(messageToSend);
+    }
+    
+    public String checkTypeMessage(String stringToCheck){
+        
+        Gson gson = new Gson();
+        
+        
+        try{
+            
+            gson.toJson(stringToCheck , Object.class);
+            
+            return "jsn";
+        }catch(Exception e){
+            return "msg";
+        }
+        
     }
     
     private String getTargetUser(){
